@@ -3,8 +3,9 @@
   "version": "1.0.0",
   "description": "Server site of Blog website",
   "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+"scripts": {
+    "start": "node api/index.js",
+    "dev": "nodemon api/index.js"
   },
   "author": "Gayathri Sivakumar",
   "license": "ISC",
