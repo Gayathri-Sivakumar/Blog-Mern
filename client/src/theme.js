@@ -3,7 +3,7 @@ import { createTheme } from "@mui/material/styles";
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#ff6f61", // Main color for primary elements
+      main: "#000f", // Main color for primary elements
       contrastText: "#fff", // Ensures text is readable on primary color
     },
     secondary: {
@@ -11,8 +11,8 @@ const theme = createTheme({
       contrastText: "#fff", // Ensures text is readable on secondary color
     },
     background: {
-      default: "#f3c6f1", // Smooth background gradient
-      paper: "#ffe1bc", // Background color for paper components
+      default: "#fff", // Smooth background gradient
+      paper: "##FAF9F6", // Background color for paper components
     },
     text: {
       primary: "#333", // Dark text for better readability
@@ -38,6 +38,9 @@ const theme = createTheme({
     },
     body2: {
       fontSize: "0.875rem",
+    },
+    body3: {
+      fontSize: "0.675rem",
     },
   },
   components: {
@@ -88,6 +91,7 @@ const theme = createTheme({
         paper: {
           padding: "24px", // Padding inside dialog
           borderRadius: "8px", // Rounded corners for dialog
+          background: "#FAF9F6", // White background for dialog
         },
       },
     },

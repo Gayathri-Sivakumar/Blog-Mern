@@ -1,25 +1,35 @@
 // src/pages/AboutPage1.js
-import { Container, Typography, Box } from "@mui/material";
+import { Container, Typography, Box, Paper, IconButton } from "@mui/material";
+import { useTheme } from "@mui/material/styles";
+import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
+import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
+import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
+import ArrowBack from "@mui/icons-material/ArrowBack";
+import { useNavigate } from "react-router-dom";
 
 const AboutPage1 = () => {
+  const theme = useTheme();
+  const navigate = useNavigate();
+
   return (
-    <Container sx={{ mt: 4 }}>
+    <Container maxWidth="md" sx={{ mt: 4 }}>
+      <IconButton color="primary" onClick={() => navigate(-1)} sx={{ mb: 0 }}>
+        <ArrowBack />
+      </IconButton>
       <Box sx={{ textAlign: "center", mb: 4 }}>
-        <Box
-          sx={{
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-            mb: 4,
-          }}
+        <Typography variant="h3" gutterBottom sx={{ fontWeight: "bold" }}>
+          Welcome to Blogger!
+        </Typography>
+        <Typography
+          variant="h5"
+          color="textSecondary"
+          gutterBottom
+          sx={{ fontStyle: "italic" }}
         >
-          <Typography variant="h4" gutterBottom>
-            Welcome to Blogger!
-          </Typography>
-          <Typography variant="h6" color="textSecondary" gutterBottom>
-            🌟 Where Curiosity Meets Creativity 🌟
-          </Typography>
-        </Box>
+          🌟 Where Curiosity Meets Creativity 🌟
+        </Typography>
+      </Box>
+      <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 2 }}>
         <Typography variant="body1" paragraph>
           Hello and welcome! We're a team of passionate creators who love
           sharing stories, insights, and a bit of fun. Since 2024, our goal has
@@ -35,26 +45,65 @@ const AboutPage1 = () => {
         </Typography>
         <Box
           component="ul"
-          sx={{ textAlign: "left", mx: "auto", maxWidth: 600 }}
+          sx={{
+            textAlign: "left",
+            mx: "auto",
+            maxWidth: 600,
+            listStyleType: "none",
+            p: 0,
+          }}
         >
-          <Box component="li" sx={{ mb: 1 }}>
-            <strong>Epic Reads:</strong> Articles that spark curiosity and
-            captivate.
+          <Box
+            component="li"
+            sx={{ mb: 2, display: "flex", alignItems: "center" }}
+          >
+            <LocalLibraryIcon
+              sx={{ mr: 1, color: theme.palette.primary.main }}
+            />
+            <Typography variant="body1" sx={{ flexGrow: 1 }}>
+              <strong>Epic Reads:</strong> Articles that spark curiosity and
+              captivate.
+            </Typography>
           </Box>
-          <Box component="li" sx={{ mb: 1 }}>
-            <strong>Genius Tips:</strong> Life hacks that make everyday tasks
-            easier.
+          <Box
+            component="li"
+            sx={{ mb: 2, display: "flex", alignItems: "center" }}
+          >
+            <EmojiEventsIcon
+              sx={{ mr: 1, color: theme.palette.primary.main }}
+            />
+            <Typography variant="body1" sx={{ flexGrow: 1 }}>
+              <strong>Genius Tips:</strong> Life hacks that make everyday tasks
+              easier.
+            </Typography>
           </Box>
-          <Box component="li" sx={{ mb: 1 }}>
-            <strong>Community Vibes:</strong> Connect with fellow enthusiasts.
+          <Box
+            component="li"
+            sx={{ mb: 2, display: "flex", alignItems: "center" }}
+          >
+            <EmojiPeopleIcon
+              sx={{ mr: 1, color: theme.palette.primary.main }}
+            />
+            <Typography variant="body1" sx={{ flexGrow: 1 }}>
+              <strong>Community Vibes:</strong> Connect with fellow enthusiasts.
+            </Typography>
           </Box>
         </Box>
         <Typography variant="body1" paragraph>
           <strong>Let’s Connect!</strong> We’d love to hear from you. Reach us
-          at <a href="mailto:Bloggers@gmail.com">Bloggers@gmail.com</a>. Your
-          feedback fuels our passion!
+          at{" "}
+          <a
+            href="mailto:Bloggers@gmail.com"
+            style={{
+              color: theme.palette.primary.main,
+              textDecoration: "underline",
+            }}
+          >
+            Bloggers@gmail.com
+          </a>
+          . Your feedback fuels our passion!
         </Typography>
-        <Typography variant="body1">
+        <Typography variant="body1" paragraph>
           Thanks for being with us on this journey. Let's make it unforgettable!
         </Typography>
         <Typography variant="body1">
@@ -62,7 +111,7 @@ const AboutPage1 = () => {
           <br />
           The Blogger Team 🚀
         </Typography>
-      </Box>
+      </Paper>
     </Container>
   );
 };

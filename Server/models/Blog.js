@@ -5,10 +5,7 @@ const blogSchema = new mongoose.Schema(
     title: { type: String, required: true },
     shortDescription: { type: String, required: true },
     content: { type: String, required: true },
-    author: {
-      id: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
-      name: { type: String, required: true },
-    },
+    authorName: { type: String, required: true },
     images: [String], // Array of image paths or URLs
   },
   {

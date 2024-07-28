@@ -1,12 +1,4 @@
-// src/components/ContactForm.js
-import {
-  TextField,
-  Button,
-  Box,
-  Typography,
-  Snackbar,
-  Alert,
-} from "@mui/material";
+import { TextField, Button, Box, Snackbar, Alert } from "@mui/material";
 import { useState } from "react";
 import { createContactMessage } from "../services/api";
 
@@ -52,9 +44,6 @@ const ContactForm = () => {
 
   return (
     <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
-      <Typography variant="h6" gutterBottom>
-        Contact Us
-      </Typography>
       <TextField
         label="Name"
         name="name"

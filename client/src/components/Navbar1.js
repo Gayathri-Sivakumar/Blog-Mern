@@ -1,15 +1,10 @@
+import React, { useState } from "react";
 import {
   AppBar,
   Toolbar,
   Typography,
   Button,
   Container,
-  Dialog,
-  DialogActions,
-  DialogContent,
-  DialogContentText,
-  DialogTitle,
-  TextField,
   Box,
   Snackbar,
   Alert,
@@ -20,14 +15,14 @@ import {
   ListItemText,
   Divider,
   useTheme,
-  useMediaQuery,
+  Tooltip,
 } from "@mui/material";
-import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { login } from "../services/api";
 import image from "../images/Blogger-Logo.png";
+import LoginDialog from "./LoginDialog";
 
 const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
   const [open, setOpen] = useState(false);
@@ -41,7 +36,6 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
 
   const navigate = useNavigate();
   const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
 
   const handleClickOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -87,6 +81,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
         display: "flex",
         flexDirection: "column",
         justifyContent: "space-between",
+        backgroundColor: "#EAEFF2",
       }}
       role="presentation"
       onClick={toggleDrawer(false)}
@@ -94,15 +89,14 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
     >
       <List>
         <ListItem>
-          <Box
-            component="img"
+          <img
             src={image}
             alt="Blogger"
-            sx={{
+            style={{
               width: "60px",
-              borderRadius: 2,
-              boxShadow: 3,
-              mx: "auto",
+              display: "block",
+              margin: "0 auto",
+              height: "auto",
             }}
           />
         </ListItem>
@@ -123,7 +117,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
           </ListItem>
         )}
         {isLoggedIn && userRole === "admin" && (
-          <ListItem button component={Link} to="/admin-panel">
+          <ListItem button component={Link} to="/admin">
             <ListItemText primary="Admin Panel" />
           </ListItem>
         )}
@@ -150,14 +144,12 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
         <Container maxWidth="lg">
           <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
             <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              <Box
-                component="img"
+              <img
                 src={image}
                 alt="Blogger"
-                sx={{
-                  width: { xs: "40px", sm: "60px" },
-                  borderRadius: 2,
-                  boxShadow: 3,
+                style={{
+                  width: "60px",
+                  display: "block",
                   transition: "transform 0.3s",
                   "&:hover": {
                     transform: "scale(1.1)",
@@ -223,13 +215,15 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
                 </Button>
               )}
             </Box>
-            <Button
-              color="inherit"
-              onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}
-              sx={{ textTransform: "none", ml: 2 }}
-            >
-              {isLoggedIn ? "Logout" : "Login"}
-            </Button>
+            <Tooltip title={isLoggedIn ? "Logout" : "Login"}>
+              <Button
+                color="inherit"
+                onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}
+                sx={{ textTransform: "none", ml: 2 }}
+              >
+                {isLoggedIn ? "Logout" : "Login"}
+              </Button>
+            </Tooltip>
             <IconButton
               color="inherit"
               aria-label="menu"
@@ -265,40 +259,13 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
         </Box>
         {drawerContent}
       </Drawer>
-      <Dialog open={open} onClose={handleClose}>
-        <DialogTitle>Login</DialogTitle>
-        <DialogContent>
-          <DialogContentText>
-            To access the admin panel, please enter your email and password.
-          </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            label="Email Address"
-            type="email"
-            name="email"
-            fullWidth
-            variant="outlined"
-            value={credentials.email}
-            onChange={handleChange}
-            sx={{ mb: 2 }}
-          />
-          <TextField
-            margin="dense"
-            label="Password"
-            type="password"
-            name="password"
-            fullWidth
-            variant="outlined"
-            value={credentials.password}
-            onChange={handleChange}
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={handleSubmit}>Login</Button>
-        </DialogActions>
-      </Dialog>
+      <LoginDialog
+        open={open}
+        handleClose={handleClose}
+        handleChange={handleChange}
+        handleSubmit={handleSubmit}
+        credentials={credentials}
+      />
       <Snackbar
         open={alertOpen}
         autoHideDuration={6000}

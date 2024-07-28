@@ -1,18 +1,20 @@
+import React, { useState, useEffect } from "react";
 import {
   Container,
   Typography,
-  Button,
   Grid,
   Box,
   Snackbar,
+  Button,
   Alert,
+  IconButton,
   CircularProgress,
 } from "@mui/material";
-import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import BlogPostCard from "../components/BlogPostCard";
 import { getAllBlogs, deleteBlog } from "../services/api";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 
 const AdminDashboard = () => {
   const [posts, setPosts] = useState([]);
@@ -20,7 +22,8 @@ const AdminDashboard = () => {
   const [open, setOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
-  const [loading, setLoading] = useState(true); // New loading state
+  const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -37,7 +40,7 @@ const AdminDashboard = () => {
         setAlert({ type: "error", message: "Failed to fetch posts." });
         setOpen(true);
       } finally {
-        setLoading(false); // Set loading to false after fetching
+        setLoading(false);
       }
     };
 
@@ -76,7 +79,10 @@ const AdminDashboard = () => {
 
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
+      <IconButton color="primary" onClick={() => navigate(-1)} sx={{ mt: 2 }}>
+        <ArrowBack />
+      </IconButton>
+      <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
         Admin Dashboard
       </Typography>
       <Button
@@ -84,10 +90,11 @@ const AdminDashboard = () => {
         color="primary"
         component={Link}
         to="/admin/new"
+        sx={{ mb: 2 }}
       >
         Create New Post
       </Button>
-      <Box mt={3}>
+      <Box mt={0}>
         {loading ? (
           <Box
             display="flex"
@@ -103,27 +110,14 @@ const AdminDashboard = () => {
             your thoughts. The community is excited to hear from you!
           </Typography>
         ) : (
-          <Grid container spacing={2} mt={2}>
+          <Grid container spacing={2} mt={0}>
             {posts.map((post) => (
               <Grid item xs={12} sm={6} md={4} key={post._id}>
-                <BlogPostCard post={post} />
-                <Box mt={1}>
-                  <Button
-                    component={Link}
-                    to={`/admin/edit/${post._id}`}
-                    variant="contained"
-                    sx={{ mr: 1 }}
-                  >
-                    Edit
-                  </Button>
-                  <Button
-                    onClick={() => handleDeleteClick(post._id)}
-                    variant="contained"
-                    color="error"
-                  >
-                    Delete
-                  </Button>
-                </Box>
+                <BlogPostCard
+                  post={post}
+                  admin={true}
+                  handleDeleteClick={handleDeleteClick}
+                />
               </Grid>
             ))}
           </Grid>

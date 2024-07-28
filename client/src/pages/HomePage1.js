@@ -24,7 +24,7 @@ const HomePage1 = () => {
   if (posts.length === 0) return <LoadingSpinner />;
 
   return (
-    <Container>
+    <Container sx={{ mt: 4 }}>
       <Grid container spacing={2}>
         {posts.map((post) => (
           <Grid item xs={12} sm={6} md={4} key={post._id}>

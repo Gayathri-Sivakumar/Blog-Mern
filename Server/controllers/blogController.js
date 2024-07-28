@@ -1,3 +1,4 @@
+const { combineTableNames } = require("sequelize/lib/utils");
 const Blog = require("../models/Blog");
 const Comment = require("../models/Comment");
 const multer = require("multer");
@@ -18,22 +19,24 @@ const upload = multer({ storage: storage });
 // Create a new blog post
 const createBlog = async (req, res) => {
   try {
+    console.log(req.body);
     const { title, shortDescription, content, authorName } = req.body;
     const image = req.file ? req.file.path : null;
 
     const newBlog = new Blog({
-      title,
-      shortDescription,
-      content,
+      title: title,
+      shortDescription: shortDescription,
+      content: content,
       // author: {
       //   id: req.user._id,
       //   name: req.user.name,
       // },
-      authorName,
+      authorName: authorName,
       images: image ? [image] : [],
     });
 
     await newBlog.save();
+    console.log(newBlog);
     res.status(201).json(newBlog);
   } catch (error) {
     console.error("Error creating blog:", error);
@@ -74,6 +77,7 @@ const getBlogById = async (req, res) => {
     const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(404).json({ error: "Blog not found" });
     res.json(blog);
+    console.log(blog);
   } catch (error) {
     res.status(500).json({ error: "Error fetching blog" });
   }

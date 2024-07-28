@@ -15,8 +15,13 @@ const PostForm = () => {
   const [post, setPost] = useState({
     title: "",
     shortDescription: "",
+    authorName: "",
     content: "",
     image: null, // Initialize as null for single image
+  });
+  const [errors, setErrors] = useState({
+    title: "",
+    shortDescription: "",
   });
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [open, setOpen] = useState(false);
@@ -52,12 +57,39 @@ const PostForm = () => {
     setPost({ ...post, [name]: value });
   };
 
+  const validateForm = () => {
+    let valid = true;
+    let errors = {};
+
+    // Validate title
+    const titleWordCount = post.title.trim().split(/\s+/).length;
+    if (titleWordCount > 20) {
+      errors.title = "Title cannot exceed 20 words.";
+      valid = false;
+    }
+
+    // Validate short description
+    if (post.shortDescription.length > 120) {
+      errors.shortDescription =
+        "Short description cannot exceed 40 characters.";
+      valid = false;
+    }
+
+    setErrors(errors);
+    return valid;
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!validateForm()) {
+      return; // Stop form submission if validation fails
+    }
 
     const formData = new FormData();
     formData.append("title", post.title);
     formData.append("shortDescription", post.shortDescription);
+    formData.append("authorName", post.authorName);
     formData.append("content", post.content);
 
     if (post.image) {
@@ -88,9 +120,13 @@ const PostForm = () => {
 
   const handleClose = () => setOpen(false);
 
+  const handleCancel = () => {
+    navigate("/admin");
+  };
+
   return (
     <Container>
-      <Typography variant="h4" gutterBottom>
+      <Typography variant="h4" gutterBottom sx={{ mt: 4 }}>
         {id ? "Edit Post" : "Create New Post"}
       </Typography>
       <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
@@ -101,12 +137,25 @@ const PostForm = () => {
           onChange={handleChange}
           fullWidth
           required
+          error={!!errors.title}
+          helperText={errors.title}
           sx={{ mb: 2 }}
         />
         <TextField
           label="Short Description"
           name="shortDescription"
           value={post.shortDescription}
+          onChange={handleChange}
+          fullWidth
+          required
+          error={!!errors.shortDescription}
+          helperText={errors.shortDescription}
+          sx={{ mb: 2 }}
+        />
+        <TextField
+          label="Author Name"
+          name="authorName"
+          value={post.authorName}
           onChange={handleChange}
           fullWidth
           required
@@ -130,9 +179,19 @@ const PostForm = () => {
           accept="image/*"
           style={{ marginBottom: "16px" }}
         />
-        <Button type="submit" variant="contained" color="primary">
-          {id ? "Update Post" : "Create Post"}
-        </Button>
+        <Box sx={{ display: "flex", justifyContent: "space-between", mt: 2 }}>
+          <Button
+            type="button"
+            variant="outlined"
+            color="secondary"
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button type="submit" variant="contained" color="primary">
+            {id ? "Update Post" : "Create Post"}
+          </Button>
+        </Box>
       </Box>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
         <Alert onClose={handleClose} severity={alert.type}>

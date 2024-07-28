@@ -1,3 +1,4 @@
+import React, { useEffect, useState } from "react";
 import {
   Container,
   Typography,
@@ -5,11 +6,11 @@ import {
   TextField,
   Paper,
   Divider,
+  IconButton,
   Button,
-  Avatar,
 } from "@mui/material";
-import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import ArrowBack from "@mui/icons-material/ArrowBack";
 import {
   getBlogById,
   getCommentsByBlogId,
@@ -24,7 +25,6 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
   const [comment, setComment] = useState({ name: "", content: "" });
-  // const [showLoginModal, setShowLoginModal] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -39,7 +39,6 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
     const fetchComments = async () => {
       try {
         const response = await getCommentsByBlogId(id);
-
         setComments(response.data);
         console.log(response.data);
       } catch (error) {
@@ -61,10 +60,6 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
 
   const handleCommentSubmit = async (e) => {
     e.preventDefault();
-    // if (!isLoggedIn) {
-    //   setShowLoginModal(true);
-    //   return;
-    // }
     try {
       const newComment = { postId: id, ...comment };
       await createComment(newComment);
@@ -78,15 +73,10 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
   if (!post) return <LoadingSpinner />;
 
   return (
-    <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => navigate(-1)}
-        sx={{ mb: 3 }}
-      >
-        Back
-      </Button>
+    <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
+      <IconButton color="primary" onClick={() => navigate(-1)} sx={{ mb: 3 }}>
+        <ArrowBack />
+      </IconButton>
       <Typography
         variant="h2"
         component="h1"
@@ -96,14 +86,14 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
         {post.title}
       </Typography>
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 2 }}>
-        {post.author.name} - {new Date(post.createdAt).toLocaleDateString()}
+        {post.authorName} - {new Date(post.createdAt).toLocaleDateString()}
       </Typography>
       <Box
         component="img"
         src={`http://localhost:8081/${post.images[0].replace(/\\/g, "/")}`}
         alt={post.title}
         sx={{
-          display: "block", // Ensures the box behaves like a block element
+          display: "block",
           height: "auto",
           width: "100%",
           borderRadius: 2,
@@ -156,49 +146,6 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
           Submit
         </Button>
       </Box>
-      {/* <Modal
-        open={showLoginModal}
-        onClose={() => setShowLoginModal(false)}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
-      >
-        <Box
-          sx={{
-            position: "absolute",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -50%)",
-            width: 400,
-            bgcolor: "background.paper",
-            border: "2px solid #000",
-            boxShadow: 24,
-            p: 4,
-          }}
-        >
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Login Required
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            You need to log in or sign up to add a comment.
-          </Typography>
-          <Button
-            variant="contained"
-            color="primary"
-            onClick={() => navigate("/login")}
-            sx={{ mt: 2 }}
-          >
-            Login
-          </Button>
-          <Button
-            variant="contained"
-            color="secondary"
-            onClick={() => navigate("/signup")}
-            sx={{ mt: 2, ml: 2 }}
-          >
-            Sign Up
-          </Button>
-        </Box>
-      </Modal> */}
     </Container>
   );
 };
