@@ -1,6 +1,8 @@
+// src/components/BlogForm.js
 import React, { useState } from "react";
 import { createBlog } from "../services/api";
 import { toast } from "react-toastify";
+import { TextField, Button, Box } from "@mui/material";
 
 const BlogForm = () => {
   const [formData, setFormData] = useState({
@@ -39,33 +41,47 @@ const BlogForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="text"
+    <Box component="form" onSubmit={handleSubmit} sx={{ mt: 3 }}>
+      <TextField
+        label="Title"
         name="title"
-        placeholder="Title"
         value={formData.title}
         onChange={handleChange}
+        fullWidth
         required
+        sx={{ mb: 2 }}
       />
-      <input
-        type="text"
+      <TextField
+        label="Short Description"
         name="shortDescription"
-        placeholder="Short Description"
         value={formData.shortDescription}
         onChange={handleChange}
+        fullWidth
         required
+        sx={{ mb: 2 }}
       />
-      <textarea
+      <TextField
+        label="Content"
         name="content"
-        placeholder="Content"
         value={formData.content}
         onChange={handleChange}
+        multiline
+        rows={4}
+        fullWidth
         required
-      ></textarea>
-      <input type="file" name="images" onChange={handleImageChange} multiple />
-      <button type="submit">Create Blog</button>
-    </form>
+        sx={{ mb: 2 }}
+      />
+      <input
+        type="file"
+        name="images"
+        onChange={handleImageChange}
+        multiple
+        style={{ marginBottom: "16px" }}
+      />
+      <Button type="submit" variant="contained" color="primary">
+        Create Blog
+      </Button>
+    </Box>
   );
 };
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+import { jwtDecode } from "jwt-decode";
 
 const API_URL = "http://localhost:8081";
 
@@ -14,11 +15,17 @@ export const login = async (credentials) => {
   try {
     const response = await api.post("/auth/login", credentials);
     const { token } = response.data;
+    console.log("token:", token);
 
     // Save token in localStorage
     localStorage.setItem("authToken", token);
 
-    return response.data;
+    // Decode the token to get user info
+    const decodedToken = jwtDecode(token);
+    const { email, name, role } = decodedToken;
+
+    // Return the user info
+    return { email, name, role };
   } catch (error) {
     throw new Error("Login failed");
   }
@@ -100,17 +107,17 @@ export const deleteBlog = async (id) => {
   }
 };
 
-export const getBlogsByUser = async () => {
-  const token = localStorage.getItem("authToken");
-  const headers = { Authorization: `Bearer ${token}` };
+// export const getBlogsByUser = async () => {
+//   const token = localStorage.getItem("authToken");
+//   const headers = { Authorization: `Bearer ${token}` };
 
-  try {
-    const response = await api.get("/blogs/user", { headers });
-    return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch user blogs");
-  }
-};
+//   try {
+//     const response = await api.get("/blogs/user", { headers });
+//     return response.data;
+//   } catch (error) {
+//     throw new Error("Failed to fetch user blogs");
+//   }
+// };
 
 // Comments
 export const getCommentsByBlogId = (blogId) => api.get(`/comments/${blogId}`);
@@ -118,5 +125,6 @@ export const createComment = (comment) => api.post("/comments", comment);
 
 // Contacts
 export const createContactMessage = (message) => api.post("/contacts", message);
+export const getContactMessages = () => api.get("/contacts");
 
 export default api;

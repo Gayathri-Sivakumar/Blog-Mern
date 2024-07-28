@@ -1,26 +1,32 @@
 const express = require("express");
+// const { authenticateToken, isAdmin } = require("../middlewares/authMiddleware");
 const { authenticateToken } = require("../middlewares/authMiddleware");
-const {
-  upload,
-  createBlog,
-  getAllBlogs,
-  getBlogById,
-  updateBlog,
-  deleteBlog,
-  getBlogsByUser,
-} = require("../controllers/blogController");
+const blogController = require("../controllers/blogController");
 
 const router = express.Router();
 
-// For creating a blog with images
-router.post("/", authenticateToken, upload.single("image"), createBlog);
+router.post(
+  "/",
+  authenticateToken,
+  blogController.upload.single("image"),
+  blogController.createBlog
+);
+router.get("/", blogController.getAllBlogs); // Publicly accessible
+// router.get("/user", authenticateToken, blogController.getBlogsByUser);
+router.get("/:id", blogController.getBlogById);
+router.put(
+  "/:id",
+  authenticateToken,
+  blogController.upload.single("image"),
+  blogController.updateBlog
+);
+router.delete("/:id", authenticateToken, blogController.deleteBlog);
 
-// For updating a blog with images
-router.put("/:id", authenticateToken, upload.single("image"), updateBlog);
-
-router.get("/", getAllBlogs);
-router.get("/user", authenticateToken, getBlogsByUser);
-router.get("/:id", getBlogById);
-router.delete("/:id", authenticateToken, deleteBlog);
+// router.get(
+//   "/blogs",
+//   authenticateToken,
+//   isAdmin,
+//   blogController.getAllBlogs
+// ); // Admin only
 
 module.exports = router;

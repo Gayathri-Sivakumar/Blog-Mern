@@ -16,6 +16,16 @@ const createContactMessage = async (req, res) => {
   }
 };
 
+const getContactMessages = async (req, res) => {
+  try {
+    const messages = await Contact.find().sort({ createdAt: -1 });
+    res.json(messages);
+  } catch (error) {
+    res.status(500).json({ error: "Error fetching messages" });
+  }
+};
+
 module.exports = {
   createContactMessage,
+  getContactMessages,
 };

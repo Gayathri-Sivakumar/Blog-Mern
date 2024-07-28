@@ -1,31 +1,25 @@
 const jwt = require("jsonwebtoken");
-const User = require("../models/User"); // Adjust the path as needed
-require("dotenv").config(); // Ensure this is at the top of your file
+const User = require("../models/User");
+require("dotenv").config();
 
 const authenticateToken = async (req, res, next) => {
-  // Extract the token from the Authorization header
   const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Expecting Bearer token
+  const token = authHeader && authHeader.split(" ")[1];
 
   if (!token) {
     return res.status(401).json({ error: "Unauthorized" });
   }
 
   try {
-    // Verify the token
     const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
-
-    // Fetch the user from the database
-    const user = await User.findById(decodedToken.id); // Ensure your User model and field names are correct
+    const user = await User.findById(decodedToken.id);
 
     if (!user) {
       return res.status(401).json({ error: "Unauthorized" });
     }
 
-    // Attach user to the request object
     req.user = user;
-    console.log("User:", user);
-
+    // req.isAdmin = user.role === "admin";
     next();
   } catch (err) {
     console.error("Token verification failed:", err);
@@ -33,6 +27,14 @@ const authenticateToken = async (req, res, next) => {
   }
 };
 
+// const isAdmin = (req, res, next) => {
+//   if (!req.isAdmin) {
+//     return res.status(403).json({ error: "Access denied. Admins only." });
+//   }
+//   next();
+// };
+
 module.exports = {
   authenticateToken,
+  // isAdmin,
 };

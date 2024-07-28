@@ -6,26 +6,24 @@ import {
   Box,
   Snackbar,
   Alert,
-  CircularProgress,
 } from "@mui/material";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import BlogPostCard from "../components/BlogPostCard";
-import { getAllBlogs, deleteBlog } from "../services/api";
+import { getBlogsByUser, deleteBlog } from "../services/api";
 import DeleteConfirmationModal from "../components/DeleteConfirmationModal";
 
-const AdminDashboard = () => {
+const MyBlogs = () => {
   const [posts, setPosts] = useState([]);
   const [alert, setAlert] = useState({ type: "", message: "" });
   const [open, setOpen] = useState(false);
   const [deleteModalOpen, setDeleteModalOpen] = useState(false);
   const [selectedPostId, setSelectedPostId] = useState(null);
-  const [loading, setLoading] = useState(true); // New loading state
 
   useEffect(() => {
     const fetchPosts = async () => {
       try {
-        const response = await getAllBlogs();
+        const response = await getBlogsByUser();
         if (response) {
           setPosts(response);
         } else {
@@ -36,8 +34,6 @@ const AdminDashboard = () => {
         console.error("Error fetching posts:", error);
         setAlert({ type: "error", message: "Failed to fetch posts." });
         setOpen(true);
-      } finally {
-        setLoading(false); // Set loading to false after fetching
       }
     };
 
@@ -77,30 +73,20 @@ const AdminDashboard = () => {
   return (
     <Container>
       <Typography variant="h4" gutterBottom>
-        Admin Dashboard
+        Manage My Blogs
       </Typography>
       <Button
         variant="contained"
         color="primary"
         component={Link}
-        to="/admin/new"
+        to="/manage-blogs/new"
       >
         Create New Post
       </Button>
       <Box mt={3}>
-        {loading ? (
-          <Box
-            display="flex"
-            justifyContent="center"
-            alignItems="center"
-            mt={5}
-          >
-            <CircularProgress />
-          </Box>
-        ) : posts.length === 0 ? (
+        {posts.length === 0 ? (
           <Typography variant="h6" color="textSecondary">
-            Your views are waiting for your post! Create a new post to share
-            your thoughts. The community is excited to hear from you!
+            No posts found. Create a new post to get started.
           </Typography>
         ) : (
           <Grid container spacing={2} mt={2}>
@@ -110,7 +96,7 @@ const AdminDashboard = () => {
                 <Box mt={1}>
                   <Button
                     component={Link}
-                    to={`/admin/edit/${post._id}`}
+                    to={`/manage-blogs/edit/${post._id}`}
                     variant="contained"
                     sx={{ mr: 1 }}
                   >
@@ -143,4 +129,4 @@ const AdminDashboard = () => {
   );
 };
 
-export default AdminDashboard;
+export default MyBlogs;

@@ -1,54 +1,35 @@
 // src/components/CommentSection.js
-import {
-  TextField,
-  Button,
-  List,
-  ListItem,
-  Typography,
-  Box,
-} from "@mui/material";
-import { useState } from "react";
+import { Box, Typography, Paper, Avatar, Divider } from "@mui/material";
 
 const CommentSection = ({ comments }) => {
-  const [comment, setComment] = useState("");
-
-  const handleCommentChange = (e) => setComment(e.target.value);
-  const handleCommentSubmit = (e) => {
-    e.preventDefault();
-    // Handle comment submission logic
-  };
+  if (!Array.isArray(comments)) {
+    return null; // or some fallback UI
+  }
 
   return (
     <Box>
-      <Typography variant="h6" gutterBottom>
+      <Typography variant="h4" sx={{ mb: 3 }}>
         Comments
       </Typography>
-      <List>
-        {comments.map((c, index) => (
-          <ListItem key={index}>
-            <Typography variant="body2">{c}</Typography>
-          </ListItem>
-        ))}
-      </List>
-      <form onSubmit={handleCommentSubmit}>
-        <TextField
-          label="Add a comment"
-          multiline
-          rows={4}
-          value={comment}
-          onChange={handleCommentChange}
-          fullWidth
-          sx={{ mt: 2 }}
-        />
-        <Button
-          type="submit"
-          variant="contained"
-          color="primary"
-          sx={{ mt: 2 }}
-        >
-          Submit
-        </Button>
-      </form>
+      {comments.map((comment) => (
+        <Paper key={comment._id} elevation={3} sx={{ p: 2, mb: 2 }}>
+          <Box sx={{ display: "flex", alignItems: "center", mb: 1 }}>
+            <Avatar>
+              {comment.authorName ? comment.authorName.charAt(0) : "?"}
+            </Avatar>
+            <Typography variant="subtitle1" fontWeight="bold" sx={{ ml: 2 }}>
+              {comment.authorName || "Anonymous"}
+            </Typography>
+          </Box>
+          <Typography variant="body1" sx={{ mb: 1 }}>
+            {comment.content}
+          </Typography>
+          <Divider />
+          <Typography variant="caption" color="text.secondary" sx={{ mt: 1 }}>
+            {new Date(comment.createdAt).toLocaleDateString()}
+          </Typography>
+        </Paper>
+      ))}
     </Box>
   );
 };

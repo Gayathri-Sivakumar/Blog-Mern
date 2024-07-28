@@ -17,23 +17,20 @@ const upload = multer({ storage: storage });
 
 // Create a new blog post
 const createBlog = async (req, res) => {
-  console.log(req.body);
   try {
-    const { title, shortDescription, content } = req.body;
-    console.log(req.body);
-    // Handle single file upload
-    const image = req.file ? req.file.path : null; // For single file
-    // const images = req.files.map((file) => file.path); // For multiple files
+    const { title, shortDescription, content, authorName } = req.body;
+    const image = req.file ? req.file.path : null;
 
     const newBlog = new Blog({
       title,
       shortDescription,
       content,
-      author: {
-        id: req.user._id,
-        name: req.user.name,
-      },
-      images: image ? [image] : [], // Ensure images is an array
+      // author: {
+      //   id: req.user._id,
+      //   name: req.user.name,
+      // },
+      authorName,
+      images: image ? [image] : [],
     });
 
     await newBlog.save();
@@ -44,17 +41,17 @@ const createBlog = async (req, res) => {
   }
 };
 
-// Get all blog posts by the request user
-const getBlogsByUser = async (req, res) => {
-  try {
-    const blogs = await Blog.find({ "author.id": req.user._id }).sort({
-      createdAt: -1,
-    });
-    res.json(blogs);
-  } catch (error) {
-    res.status(500).json({ error: "Error fetching user blogs" });
-  }
-};
+// // Get all blog posts by the request user
+// const getBlogsByUser = async (req, res) => {
+//   try {
+//     const blogs = await Blog.find({ "author.id": req.user._id }).sort({
+//       createdAt: -1,
+//     });
+//     res.json(blogs);
+//   } catch (error) {
+//     res.status(500).json({ error: "Error fetching user blogs" });
+//   }
+// };
 
 // Get all blog posts
 const getAllBlogs = async (req, res) => {
@@ -69,10 +66,12 @@ const getAllBlogs = async (req, res) => {
 // Get a specific blog post by ID
 const getBlogById = async (req, res) => {
   try {
-    const blog = await Blog.findById(req.params.id).populate(
-      "author.id",
-      "name"
-    );
+    // const blog = await Blog.findById(req.params.id).populate(
+    //   "author.id",
+    //   "name"
+    // );
+
+    const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(404).json({ error: "Blog not found" });
     res.json(blog);
   } catch (error) {
@@ -83,27 +82,25 @@ const getBlogById = async (req, res) => {
 // Update a blog post
 const updateBlog = async (req, res) => {
   try {
-    const { title, shortDescription, content } = req.body;
+    const { title, shortDescription, content, authorName } = req.body;
     const image = req.file ? req.file.path : null;
-    console.log(req.body);
 
-    const updatedBlog = await Blog.findByIdAndUpdate(
-      req.params.id,
-      {
-        title,
-        shortDescription,
-        content,
-        author: {
-          id: req.user._id,
-          name: req.user.name,
-        },
-        images: image ? [image] : [],
-        updatedAt: Date.now(),
-      },
-      { new: true }
-    );
+    // Ensure only the author or an admin can update the blog
+    const blog = await Blog.findById(req.params.id);
+    if (!blog) return res.status(404).json({ error: "Blog not found" });
 
-    if (!updatedBlog) return res.status(404).json({ error: "Blog not found" });
+    // if (blog.author.id.toString() !== req.user._id.toString() && !req.isAdmin) {
+    //   return res.status(403).json({ error: "Access denied" });
+    // }
+
+    blog.title = title;
+    blog.shortDescription = shortDescription;
+    blog.content = content;
+    blog.authorName = authorName;
+    blog.images = image ? [image] : blog.images;
+    blog.updatedAt = Date.now();
+
+    const updatedBlog = await blog.save();
     res.json(updatedBlog);
   } catch (error) {
     console.error("Error updating blog:", error);
@@ -114,8 +111,15 @@ const updateBlog = async (req, res) => {
 // Delete a blog post
 const deleteBlog = async (req, res) => {
   try {
-    const blog = await Blog.findByIdAndDelete(req.params.id);
+    const blog = await Blog.findById(req.params.id);
     if (!blog) return res.status(404).json({ error: "Blog not found" });
+
+    // // Ensure only the author or an admin can delete the blog
+    // if (blog.author.id.toString() !== req.user._id.toString() && !req.isAdmin) {
+    //   return res.status(403).json({ error: "Access denied" });
+    // }
+
+    await blog.delete();
     await Comment.deleteMany({ blogId: blog._id });
     res.json({ message: "Blog deleted successfully" });
   } catch (error) {
@@ -130,5 +134,4 @@ module.exports = {
   getBlogById,
   updateBlog,
   deleteBlog,
-  getBlogsByUser,
 };

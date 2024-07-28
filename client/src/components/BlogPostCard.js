@@ -1,3 +1,4 @@
+// src/components/BlogPostCard.js
 import { Card, CardContent, Typography, Button } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -7,9 +8,6 @@ const BlogPostCard = ({ post }) => {
     images.length > 0
       ? `http://localhost:8081/${images[0].replace(/\\/g, "/")}`
       : null;
-
-  console.log("Post Data:", post);
-  console.log("Image URL:", imageUrl);
 
   return (
     <Card
@@ -29,8 +27,7 @@ const BlogPostCard = ({ post }) => {
           alt={title}
           style={{ height: "200px", objectFit: "cover" }}
           onError={(e) => {
-            console.error("Image failed to load:", e);
-            e.target.style.display = "none";
+            e.target.src = "/path/to/default/image.jpg"; // Fallback image
           }}
         />
       )}

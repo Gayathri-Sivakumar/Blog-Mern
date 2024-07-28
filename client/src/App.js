@@ -11,18 +11,24 @@ import BlogPostPage2 from "./pages/BlogPostPage2";
 import AboutPage1 from "./pages/AboutPage1";
 import ContactPage1 from "./pages/ContactPage1";
 import AdminDashboard from "./pages/AdminDashboard";
+import ContactDetails from "./pages/ContactDetails";
+// import ManageMyBlogs from "./pages/MyBlogs";
 import PostForm from "./pages/PostForm";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userRole, setUserRole] = useState("");
 
-  const handleLogin = () => {
+  const handleLogin = (role) => {
     setIsLoggedIn(true);
+    setUserRole(role);
   };
+
   const handleLogout = () => {
     setIsLoggedIn(false);
+    setUserRole("");
   };
 
   return (
@@ -32,7 +38,9 @@ const App = () => {
         isLoggedIn={isLoggedIn}
         handleLogin={handleLogin}
         handleLogout={handleLogout}
+        userRole={userRole}
       />
+
       <Routes>
         <Route path="/" element={<HomePage1 />} />
         <Route path="/post/:id" element={<BlogPostPage2 />} />
@@ -40,16 +48,65 @@ const App = () => {
         <Route path="/contact" element={<ContactPage1 />} />
         <Route
           path="/admin"
-          element={isLoggedIn ? <AdminDashboard /> : <Navigate to="/" />}
+          element={
+            isLoggedIn && userRole === "admin" ? (
+              <AdminDashboard />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
+        <Route path="/contact-details" element={<ContactDetails />} />
         <Route
           path="/admin/new"
-          element={isLoggedIn ? <PostForm /> : <Navigate to="/" />}
+          element={
+            isLoggedIn && userRole === "admin" ? (
+              <PostForm />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
         <Route
           path="/admin/edit/:id"
-          element={isLoggedIn ? <PostForm /> : <Navigate to="/" />}
+          element={
+            isLoggedIn && userRole === "admin" ? (
+              <PostForm />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
         />
+        {/* <Route
+          path="/manage-blogs"
+          element={
+            isLoggedIn && userRole === "user" ? (
+              <ManageMyBlogs />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/manage-blogs/new"
+          element={
+            isLoggedIn && userRole === "user" ? (
+              <PostForm />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        />
+        <Route
+          path="/manage-blogs/edit/:id"
+          element={
+            isLoggedIn && userRole === "user" ? (
+              <PostForm />
+            ) : (
+              <Navigate to="/" />
+            )
+          }
+        /> */}
       </Routes>
     </Router>
   );
