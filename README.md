@@ -15,7 +15,7 @@ Make sure you have the following installed on your machine before getting starte
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/Gayathri-Sivakumar/Blog-Mern.git
 cd your-repo-name
 ```
 
