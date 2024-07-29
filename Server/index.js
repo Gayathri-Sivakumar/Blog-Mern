@@ -32,10 +32,20 @@ if (!fs.existsSync(uploadsDir)) {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(helmet()); // Security headers
+const allowedOrigins = [
+  "https://blog-mern-frontend-clldtok24-gayathris-projects-e91ac8fc.vercel.app",
+  "https://blog-mern-frontend-two.vercel.app",
+];
 app.use(
   cors({
-    origin:
-      process.env.CORS_ORIGIN || "https://blog-mern-frontend-two.vercel.app/",
+    origin: function (origin, callback) {
+      // Allow requests with no origin (like mobile apps or curl requests)
+      if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+      } else {
+        callback(new Error("Not allowed by CORS"));
+      }
+    },
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
