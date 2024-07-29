@@ -34,7 +34,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet()); // Security headers
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
+    origin:
+      process.env.CORS_ORIGIN || "https://blog-mern-frontend-two.vercel.app/",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
