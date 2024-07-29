@@ -12,7 +12,8 @@ const HomePage1 = () => {
     const fetchPosts = async () => {
       try {
         const response = await getAllBlogs();
-        setPosts(response); // Update based on actual response structure
+        console.log(response);
+        setPosts(response);
       } catch (error) {
         toast.error("Failed to fetch posts");
       }
