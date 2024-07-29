@@ -90,7 +90,10 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
       </Typography>
       <Box
         component="img"
-        src={`http://localhost:8081/${post.images[0].replace(/\\/g, "/")}`}
+        src={`https://blog-mern-api-nine.vercel.app/${post.images[0].replace(
+          /\\/g,
+          "/"
+        )}`}
         alt={post.title}
         sx={{
           display: "block",
