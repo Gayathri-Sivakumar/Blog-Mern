@@ -24,7 +24,7 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState({ name: "", content: "" });
+  const [comment, setComment] = useState({ authorName: "", content: "" });
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -119,10 +119,11 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
         </Typography>
         <TextField
           label="Your Name"
-          name="name"
-          value={comment.name}
+          name="authorName"
+          value={comment.authorName}
           onChange={handleCommentChange}
           fullWidth
+          required
           variant="outlined"
           sx={{ mb: 2 }}
         />
@@ -130,6 +131,7 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
           label="Add a comment"
           name="content"
           multiline
+          required
           rows={4}
           value={comment.content}
           onChange={handleCommentChange}

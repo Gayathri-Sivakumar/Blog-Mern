@@ -10,7 +10,7 @@ const ContactPage1 = () => {
       <IconButton color="primary" onClick={() => navigate(-1)} sx={{ mb: 0 }}>
         <ArrowBack />
       </IconButton>
-      <Typography variant="h4" gutterBottom mt={0}>
+      <Typography variant="h4" gutterBottom mt={2}>
         Contact Us
       </Typography>
       <ContactForm />

@@ -6,6 +6,7 @@ import EmojiEventsIcon from "@mui/icons-material/EmojiEvents";
 import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
+import image from "../images/bloggers-wiltshire.jpg";
 
 const AboutPage1 = () => {
   const theme = useTheme();
@@ -18,7 +19,7 @@ const AboutPage1 = () => {
       </IconButton>
       <Box sx={{ textAlign: "center", mb: 4 }}>
         <Typography variant="h3" gutterBottom sx={{ fontWeight: "bold" }}>
-          Welcome to Blogger!
+          Welcome to Blog Bite!
         </Typography>
         <Typography
           variant="h5"
@@ -29,6 +30,20 @@ const AboutPage1 = () => {
           🌟 Where Curiosity Meets Creativity 🌟
         </Typography>
       </Box>
+      <Box
+        component="img"
+        src={image}
+        alt="B;og image"
+        sx={{
+          display: "block",
+          height: "auto",
+          width: "100%",
+          borderRadius: 2,
+          boxShadow: 3,
+          mb: 2,
+          mx: "auto",
+        }}
+      ></Box>
       <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 2 }}>
         <Typography variant="body1" paragraph>
           Hello and welcome! We're a team of passionate creators who love
@@ -99,7 +114,7 @@ const AboutPage1 = () => {
               textDecoration: "underline",
             }}
           >
-            Bloggers@gmail.com
+            blogbite@gmail.com
           </a>
           . Your feedback fuels our passion!
         </Typography>
@@ -109,7 +124,7 @@ const AboutPage1 = () => {
         <Typography variant="body1">
           Stay awesome,
           <br />
-          The Blogger Team 🚀
+          The Blog Bite Team 🚀
         </Typography>
       </Paper>
     </Container>
