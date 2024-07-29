@@ -10,7 +10,6 @@ const login = async (req, res) => {
     if (!user) {
       return res.status(401).json({ error: "Invalid email or password" });
     }
-    console.log("user :", user);
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
       return res.status(401).json({ error: "Invalid email or password" });
@@ -23,7 +22,6 @@ const login = async (req, res) => {
         expiresIn: "1h",
       }
     );
-    console.log("token :", token);
     return res.json({ token });
   } catch (error) {
     console.error("Error during login:", error);
