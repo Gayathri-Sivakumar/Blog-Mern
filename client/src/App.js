@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -22,17 +22,6 @@ import { Box } from "@mui/material";
 const App = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [userRole, setUserRole] = useState("");
-
-  useEffect(() => {
-    // Retrieve authentication state from localStorage
-    const storedToken = localStorage.getItem("authToken");
-    const storedRole = localStorage.getItem("userRole");
-
-    if (storedToken) {
-      setIsLoggedIn(true);
-      setUserRole(storedRole || "");
-    }
-  }, []);
 
   const handleLogin = (role) => {
     setIsLoggedIn(true);
