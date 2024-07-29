@@ -95,7 +95,7 @@ const ContactForm = () => {
         type="submit"
         variant="contained"
         color="primary"
-        sx={{ display: "block", ml: "auto" }}
+        sx={{ display: "block", ml: "auto", mr: 1, width: "10%" }}
       >
         Send
       </Button>

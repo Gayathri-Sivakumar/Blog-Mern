@@ -1,4 +1,4 @@
-import { Container, Grid } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import BlogPostCard from "../components/BlogPostCard";
 import { useEffect, useState } from "react";
 import { getAllBlogs } from "../services/api";
@@ -37,6 +37,7 @@ const HomePage = () => {
 
   return (
     <Container sx={{ mt: 4 }}>
+      <Typography variant="h2">Top Posts!</Typography>
       <Grid container spacing={2}>
         {posts.map((post) => (
           <Grid item xs={12} sm={6} md={4} key={post._id}>

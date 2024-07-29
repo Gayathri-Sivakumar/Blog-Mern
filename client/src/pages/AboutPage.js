@@ -1,3 +1,4 @@
+import React from "react";
 import { Container, Typography, Box, Paper, IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
@@ -6,6 +7,7 @@ import LocalLibraryIcon from "@mui/icons-material/LocalLibrary";
 import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import image from "../images/bloggers-wiltshire.jpg";
+import logo from "../images/Logo.png";
 
 const AboutPage = () => {
   const theme = useTheme();
@@ -21,7 +23,7 @@ const AboutPage = () => {
           Welcome to Blog Bite!
         </Typography>
         <Typography
-          variant="h5"
+          variant="h6"
           color="textSecondary"
           gutterBottom
           sx={{ fontStyle: "italic" }}
@@ -32,7 +34,7 @@ const AboutPage = () => {
       <Box
         component="img"
         src={image}
-        alt="B;og image"
+        alt="Blog image"
         sx={{
           display: "block",
           height: "auto",
@@ -45,9 +47,10 @@ const AboutPage = () => {
       ></Box>
       <Paper elevation={3} sx={{ p: 3, mb: 4, borderRadius: 2 }}>
         <Typography variant="body1" paragraph>
-          Hello and welcome! We're a team of passionate creators who love
-          sharing stories, insights, and a bit of fun. Since 2024, our goal has
-          been to inspire and entertain you with our content.
+          <b>Hello and welcome!</b>
+          <br /> We're a team of passionate creators who love sharing stories,
+          insights, and a bit of fun. Since 2024, our goal has been to inspire
+          and entertain you with our content.
         </Typography>
         <Typography variant="body1" paragraph>
           <strong>Our Mission:</strong> To blend learning with entertainment.
@@ -120,11 +123,29 @@ const AboutPage = () => {
         <Typography variant="body1" paragraph>
           Thanks for being with us on this journey. Let's make it unforgettable!
         </Typography>
-        <Typography variant="body1">
+        <Typography variant="body1" sx={{ mt: 0 }}>
           Stay awesome,
-          <br />
-          The Blog Bite Team 🚀
         </Typography>
+        <Box
+          sx={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
+          <Typography variant="body1">
+            <b>The Blog Bite Team 🚀</b>
+          </Typography>
+          <img
+            src={logo}
+            alt="Blog Bite"
+            style={{
+              width: "140px",
+              height: "auto",
+              marginRight: "16px",
+            }}
+          />
+        </Box>
       </Paper>
     </Container>
   );

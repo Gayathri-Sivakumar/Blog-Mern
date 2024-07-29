@@ -15,7 +15,6 @@ import {
   ListItemText,
   Divider,
   useTheme,
-  Tooltip,
 } from "@mui/material";
 import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -261,23 +260,22 @@ const Navbar = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
               )}
             </Box>
             <Box sx={{ display: "flex", alignItems: "center" }}>
-              <Tooltip title={isLoggedIn ? "Logout" : "Login"}>
-                <Button
-                  onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}
-                  sx={{
-                    textTransform: "none",
-                    color: "black",
-                    backgroundColor: "transparent",
-                    "&:hover": {
-                      backgroundColor: theme.palette.secondary,
-                      color: "white",
-                    },
-                    ml: 1,
-                  }}
-                >
-                  {isLoggedIn ? "Logout" : "Login"}
-                </Button>
-              </Tooltip>
+              <Button
+                onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}
+                sx={{
+                  textTransform: "none",
+                  color: "black",
+                  backgroundColor: "transparent",
+                  "&:hover": {
+                    backgroundColor: theme.palette.secondary,
+                    color: "white",
+                  },
+                  ml: 1,
+                }}
+              >
+                {isLoggedIn ? "Logout" : "Login"}
+              </Button>
+
               <IconButton
                 color="inherit"
                 aria-label="menu"
