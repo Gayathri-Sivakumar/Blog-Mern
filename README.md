@@ -1,55 +1,99 @@
-#MERN Stack Blog Website.
-###This is a full-stack MERN (MongoDB, Express.js, React.js, Node.js) application. The project is organized into two main directories: client for the frontend and server for the backend.
-##Prerequisites
-Before you begin, ensure you have the following installed on your local machine:
-1.Node.js (v12.x or later)
-2.npm or Yarn
-3.MongoDB (Make sure MongoDB is running on your system)
+# MERN Stack Blog Website
 
-##Installation
-###1.Clone the repository:
-git clone https://github.com/Gayathri-Sivakumar/Blog-Mern.git
+Welcome to the MERN Stack Blog Website! This is a full-stack application using MongoDB, Express.js, React.js, and Node.js. Dive in and enjoy coding!
+
+## Prerequisites
+
+Make sure you have the following installed on your machine before getting started:
+
+1. **Node.js** (v12.x or later)
+2. **npm** or **Yarn**
+3. **MongoDB** (Ensure MongoDB is running)
+
+## Installation
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/your-username/your-repo-name.git
 cd your-repo-name
-###2.Install dependencies for the backend:
+```
+
+### 2. Install Backend Dependencies
+
+```bash
 cd server
 npm install
-###3.Install dependencies for the frontend:
+```
+
+### 3. Install Frontend Dependencies
+
+```bash
 cd ../client
 npm install
+```
 
-##Running the Application
-###Running the Backend
-1.Navigate to the server directory:
-cd server
-2.Create a .env file for environment variables:
-PORT=8081
-MONGO_URI=your_mongo_connection_string
-JWT_SECRET=your_jwt_secret
-CROS_ORIGIN=your_frontend_link
-3.Start the backend server:
-npm start
+## Running the Application
 
-####The backend server will start on http://localhost:8081.
+### Running the Backend
 
-###Running the Frontend
-1.Navigate to the client directory:
-cd ../client
-2.Start the frontend development server:
-npm start
+1. Navigate to the `server` directory:
 
-####The frontend development server will start on http://localhost:3000.
+   ```bash
+   cd server
+   ```
 
-##Technologies Used
-###Frontend:
-React.js
-Axios
-React Router
-MUI
+2. Create a `.env` file for environment variables:
 
-###Backend:
-Node.js
-Express.js
-MongoDB
-Mongoose
-JWT for authentication
-bcrypt for password hashing
+   ```plaintext
+   PORT=8081
+   MONGO_URI=your_mongo_connection_string
+   JWT_SECRET=your_jwt_secret
+   CORS_ORIGIN=your_frontend_link
+   ```
+
+3. Start the backend server:
+
+   ```bash
+   npm start
+   ```
+
+   The backend server will start on [http://localhost:5000](http://localhost:5000).
+
+### Running the Frontend
+
+1. Navigate to the `client` directory:
+
+   ```bash
+   cd ../client
+   ```
+
+2. Start the frontend development server:
+
+   ```bash
+   npm start
+   ```
+
+   The frontend development server will start on [http://localhost:3000](http://localhost:3000).
+
+## Technologies Used
+
+### Frontend
+
+- **React.js**
+- **Axios**
+- **React Router**
+- **MUI**
+
+### Backend
+
+- **Node.js**
+- **Express.js**
+- **MongoDB**
+- **Mongoose**
+- **JWT** for authentication
+- **bcrypt** for password hashing
+
+---
+
+Happy coding! If you have any questions or issues, feel free to reach out.
