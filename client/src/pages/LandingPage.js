@@ -40,7 +40,7 @@ const LandingPage = () => {
           <Typography variant="h2" gutterBottom sx={{ fontWeight: "bold" }}>
             Welcome to Blog Bite
           </Typography>
-          <Typography variant="h5" paragraph>
+          <Typography variant="h5" sx={{ color: "#ffff " }} paragraph>
             Discover the latest and greatest in blogging. Join our community and
             share your thoughts with the world!
           </Typography>

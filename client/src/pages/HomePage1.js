@@ -3,7 +3,7 @@ import BlogPostCard from "../components/BlogPostCard";
 import { useEffect, useState } from "react";
 import { getAllBlogs } from "../services/api";
 import { toast } from "react-toastify";
-import LoadingSpinner from "../components/LoadingSpinner";
+import { Box, CircularProgress } from "@mui/material";
 
 const HomePage1 = () => {
   const [posts, setPosts] = useState([]);
@@ -22,7 +22,18 @@ const HomePage1 = () => {
     fetchPosts();
   }, []);
 
-  if (posts.length === 0) return <LoadingSpinner />;
+  if (posts.length === 0)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mt={5}
+        height="100vh" // Make sure the parent container takes the full viewport height
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <Container sx={{ mt: 4 }}>

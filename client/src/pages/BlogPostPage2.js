@@ -8,6 +8,7 @@ import {
   Divider,
   IconButton,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { useParams, useNavigate } from "react-router-dom";
 import ArrowBack from "@mui/icons-material/ArrowBack";
@@ -17,7 +18,6 @@ import {
   createComment,
 } from "../services/api";
 import CommentSection from "../components/CommentSection";
-import LoadingSpinner from "../components/LoadingSpinner";
 
 const BlogPostPage2 = ({ isLoggedIn }) => {
   const { id } = useParams();
@@ -70,7 +70,18 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
     }
   };
 
-  if (!post) return <LoadingSpinner />;
+  if (!post)
+    return (
+      <Box
+        display="flex"
+        justifyContent="center"
+        alignItems="center"
+        mt={5}
+        height="100vh"
+      >
+        <CircularProgress />
+      </Box>
+    );
 
   return (
     <Container maxWidth="lg" sx={{ mt: 2, mb: 4 }}>
