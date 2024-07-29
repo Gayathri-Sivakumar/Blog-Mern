@@ -2,18 +2,9 @@ const { combineTableNames } = require("sequelize/lib/utils");
 const Blog = require("../models/Blog");
 const Comment = require("../models/Comment");
 const multer = require("multer");
-const path = require("path");
 
 // Multer setup
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads/");
-  },
-  filename: (req, file, cb) => {
-    cb(null, Date.now() + path.extname(file.originalname));
-  },
-});
-
+const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
 // Create a new blog post
@@ -21,7 +12,11 @@ const createBlog = async (req, res) => {
   try {
     console.log(req.body);
     const { title, shortDescription, content, authorName } = req.body;
-    const image = req.file ? req.file.path : null;
+    let image = null;
+
+    if (req.file) {
+      image = req.file.buffer.toString("base64");
+    }
 
     const newBlog = new Blog({
       title: title,
@@ -87,7 +82,11 @@ const getBlogById = async (req, res) => {
 const updateBlog = async (req, res) => {
   try {
     const { title, shortDescription, content, authorName } = req.body;
-    const image = req.file ? req.file.path : null;
+    let image = null;
+
+    if (req.file) {
+      image = req.file.buffer.toString("base64");
+    }
 
     // Ensure only the author or an admin can update the blog
     const blog = await Blog.findById(req.params.id);
@@ -101,7 +100,9 @@ const updateBlog = async (req, res) => {
     blog.shortDescription = shortDescription;
     blog.content = content;
     blog.authorName = authorName;
-    blog.images = image ? [image] : blog.images;
+    if (image) {
+      blog.images = [image];
+    }
     blog.updatedAt = Date.now();
 
     const updatedBlog = await blog.save();

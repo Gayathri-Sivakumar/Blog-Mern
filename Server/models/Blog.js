@@ -6,7 +6,7 @@ const blogSchema = new mongoose.Schema(
     shortDescription: { type: String, required: true },
     content: { type: String, required: true },
     authorName: { type: String, required: true },
-    images: [String], // Array of image paths or URLs
+    images: [String], // Array of Base64 encoded image strings
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
