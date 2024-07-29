@@ -35,6 +35,7 @@ const PostForm = () => {
           const response = await getBlogById(id);
           setPost({
             ...response,
+            image: null, // Ensure image is not set during edit
           });
         } catch (error) {
           console.error("Error fetching post:", error);
@@ -71,7 +72,7 @@ const PostForm = () => {
     // Validate short description
     if (post.shortDescription.length > 120) {
       errors.shortDescription =
-        "Short description cannot exceed 40 characters.";
+        "Short description cannot exceed 120 characters.";
       valid = false;
     }
 

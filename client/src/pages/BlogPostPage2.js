@@ -64,7 +64,7 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
       const newComment = { postId: id, ...comment };
       await createComment(newComment);
       setComments((prevComments) => [...prevComments, newComment]);
-      setComment({ name: "", content: "" });
+      setComment({ authorName: "", content: "" });
     } catch (error) {
       console.error("Error adding comment:", error);
     }
@@ -88,23 +88,22 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
       <Typography variant="subtitle1" color="text.secondary" sx={{ mb: 2 }}>
         {post.authorName} - {new Date(post.createdAt).toLocaleDateString()}
       </Typography>
-      <Box
-        component="img"
-        src={`https://blog-mern-api-nine.vercel.app/${post.images[0].replace(
-          /\\/g,
-          "/"
-        )}`}
-        alt={post.title}
-        sx={{
-          display: "block",
-          height: "auto",
-          width: "100%",
-          borderRadius: 2,
-          boxShadow: 3,
-          mb: 2,
-          mx: "auto",
-        }}
-      />
+      {post.images && post.images[0] && (
+        <Box
+          component="img"
+          src={`data:image/jpeg;base64,${post.images[0]}`}
+          alt={post.title}
+          sx={{
+            display: "block",
+            height: "auto",
+            width: "100%",
+            borderRadius: 2,
+            boxShadow: 3,
+            mb: 2,
+            mx: "auto",
+          }}
+        />
+      )}
       <Paper elevation={3} sx={{ p: 3, mb: 4 }}>
         <Typography
           variant="body1"

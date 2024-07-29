@@ -15,10 +15,12 @@ import DeleteIcon from "@mui/icons-material/Delete";
 
 const BlogPostCard = ({ post, admin, handleDeleteClick }) => {
   const { title, shortDescription, images = [], _id } = post;
+
+  // Handle Base64 images
   const imageUrl =
     images.length > 0
-      ? `https://blog-mern-api-nine.vercel.app/${images[0].replace(/\\/g, "/")}`
-      : null;
+      ? `data:image/jpeg;base64,${images[0]}`
+      : "/path/to/default/image.jpg";
 
   return (
     <Card
@@ -33,16 +35,14 @@ const BlogPostCard = ({ post, admin, handleDeleteClick }) => {
         boxShadow: 3,
       }}
     >
-      {imageUrl && (
-        <img
-          src={imageUrl}
-          alt={title}
-          style={{ height: "200px", objectFit: "cover" }}
-          onError={(e) => {
-            e.target.src = "/path/to/default/image.jpg";
-          }}
-        />
-      )}
+      <img
+        src={imageUrl}
+        alt={title}
+        style={{ height: "200px", objectFit: "cover" }}
+        onError={(e) => {
+          e.target.src = "/path/to/default/image.jpg";
+        }}
+      />
       <CardContent>
         <Typography variant="h5" component="div">
           {title}
