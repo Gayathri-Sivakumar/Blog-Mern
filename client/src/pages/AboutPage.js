@@ -1,4 +1,3 @@
-// src/pages/AboutPage1.js
 import { Container, Typography, Box, Paper, IconButton } from "@mui/material";
 import { useTheme } from "@mui/material/styles";
 import EmojiPeopleIcon from "@mui/icons-material/EmojiPeople";
@@ -8,7 +7,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import { useNavigate } from "react-router-dom";
 import image from "../images/bloggers-wiltshire.jpg";
 
-const AboutPage1 = () => {
+const AboutPage = () => {
   const theme = useTheme();
   const navigate = useNavigate();
 
@@ -131,4 +130,4 @@ const AboutPage1 = () => {
   );
 };
 
-export default AboutPage1;
+export default AboutPage;

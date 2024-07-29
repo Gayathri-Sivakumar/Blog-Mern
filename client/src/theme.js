@@ -55,13 +55,13 @@ const theme = createTheme({
     MuiButton: {
       styleOverrides: {
         root: {
-          background: "#EFB596", // Primary button background
+          background: "#E7905C", // Primary button background
           color: "#ffffff", // Button text color
           borderRadius: "4px", // Slightly rounded corners for buttons
           padding: "8px 16px", // Adequate padding for buttons
           textTransform: "none", // Preserve button text case
           "&:hover": {
-            background: "#E7905C", // Darker shade on hover
+            background: "#F05E23", // Darker shade on hover
             boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)", // Subtle shadow for depth
           },
           "&:disabled": {

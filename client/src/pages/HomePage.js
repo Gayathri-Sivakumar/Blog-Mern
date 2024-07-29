@@ -5,7 +5,7 @@ import { getAllBlogs } from "../services/api";
 import { toast } from "react-toastify";
 import { Box, CircularProgress } from "@mui/material";
 
-const HomePage1 = () => {
+const HomePage = () => {
   const [posts, setPosts] = useState([]);
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const HomePage1 = () => {
         justifyContent="center"
         alignItems="center"
         mt={5}
-        height="100vh" // Make sure the parent container takes the full viewport height
+        height="100vh"
       >
         <CircularProgress />
       </Box>
@@ -48,4 +48,4 @@ const HomePage1 = () => {
   );
 };
 
-export default HomePage1;
+export default HomePage;

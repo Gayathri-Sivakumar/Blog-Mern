@@ -1,4 +1,3 @@
-// src/components/CommentSection.js
 import { Box, Typography, Paper, Avatar, Divider } from "@mui/material";
 
 const CommentSection = ({ comments }) => {

@@ -3,7 +3,7 @@ import ArrowBack from "@mui/icons-material/ArrowBack";
 import { Container, Typography, IconButton } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
-const ContactPage1 = () => {
+const ContactPage = () => {
   const navigate = useNavigate();
   return (
     <Container sx={{ mt: "20px" }}>
@@ -18,4 +18,4 @@ const ContactPage1 = () => {
   );
 };
 
-export default ContactPage1;
+export default ContactPage;

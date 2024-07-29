@@ -19,7 +19,7 @@ import {
 } from "../services/api";
 import CommentSection from "../components/CommentSection";
 
-const BlogPostPage2 = ({ isLoggedIn }) => {
+const BlogPostPage = ({ isLoggedIn }) => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
@@ -165,4 +165,4 @@ const BlogPostPage2 = ({ isLoggedIn }) => {
   );
 };
 
-export default BlogPostPage2;
+export default BlogPostPage;

@@ -24,7 +24,7 @@ import { login } from "../services/api";
 import image from "../images/Logo.png";
 import LoginDialog from "./LoginDialog";
 
-const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
+const Navbar = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
   const [open, setOpen] = useState(false);
   const [credentials, setCredentials] = useState({
     email: "",
@@ -101,32 +101,27 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
           />
         </ListItem>
         <Divider />
-        <ListItem button component={Link} to="/home">
-          <ListItemText primary="Home" />
+        <ListItem component={Link} to="/home">
+          {isLoggedIn && userRole === "admin" ? (
+            <ListItemText primary="Admin Panel" />
+          ) : (
+            <ListItemText primary="Home" />
+          )}
         </ListItem>
-        <ListItem button component={Link} to="/about">
+        <ListItem component={Link} to="/about">
           <ListItemText primary="About" />
         </ListItem>
-        {isLoggedIn && userRole === "admin" ? (
-          <ListItem button component={Link} to="/contact-details">
+
+        <ListItem component={Link} to="/contact">
+          {isLoggedIn && userRole === "admin" ? (
             <ListItemText primary="Contact Details" />
-          </ListItem>
-        ) : (
-          <ListItem button component={Link} to="/contact">
+          ) : (
             <ListItemText primary="Contact" />
-          </ListItem>
-        )}
-        {isLoggedIn && userRole === "admin" && (
-          <ListItem button component={Link} to="/admin">
-            <ListItemText primary="Admin Panel" />
-          </ListItem>
-        )}
+          )}
+        </ListItem>
       </List>
       <Divider />
-      <ListItem
-        button
-        onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}
-      >
+      <ListItem onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}>
         <ListItemText primary={isLoggedIn ? "Logout" : "Login"} />
       </ListItem>
     </Box>
@@ -182,21 +177,40 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
                 justifyContent: "flex-end",
               }}
             >
-              <Button
-                component={Link}
-                to="/home"
-                sx={{
-                  textTransform: "none",
-                  color: "black",
-                  backgroundColor: "transparent",
-                  "&:hover": {
-                    backgroundColor: theme.palette.secondary,
-                    color: "white",
-                  },
-                }}
-              >
-                Home
-              </Button>
+              {isLoggedIn && userRole === "admin" ? (
+                <Button
+                  component={Link}
+                  to="/home"
+                  sx={{
+                    textTransform: "none",
+                    color: "black",
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: theme.palette.secondary,
+                      color: "white",
+                    },
+                  }}
+                >
+                  Admin Panel
+                </Button>
+              ) : (
+                <Button
+                  component={Link}
+                  to="/home"
+                  sx={{
+                    textTransform: "none",
+                    color: "black",
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: theme.palette.secondary,
+                      color: "white",
+                    },
+                  }}
+                >
+                  Home
+                </Button>
+              )}
+
               <Button
                 component={Link}
                 to="/about"
@@ -215,7 +229,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
               {isLoggedIn && userRole === "admin" ? (
                 <Button
                   component={Link}
-                  to="/contact-details"
+                  to="/contact"
                   sx={{
                     textTransform: "none",
                     color: "black",
@@ -243,23 +257,6 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
                   }}
                 >
                   Contact
-                </Button>
-              )}
-              {isLoggedIn && userRole === "admin" && (
-                <Button
-                  component={Link}
-                  to="/admin"
-                  sx={{
-                    textTransform: "none",
-                    color: "black",
-                    backgroundColor: "transparent",
-                    "&:hover": {
-                      backgroundColor: theme.palette.secondary,
-                      color: "white",
-                    },
-                  }}
-                >
-                  Admin Panel
                 </Button>
               )}
             </Box>
@@ -338,4 +335,4 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
   );
 };
 
-export default Navbar1;
+export default Navbar;

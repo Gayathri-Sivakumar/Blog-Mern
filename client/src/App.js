@@ -5,11 +5,11 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
-import Navbar1 from "./components/Navbar1";
-import HomePage1 from "./pages/HomePage1";
-import BlogPostPage2 from "./pages/BlogPostPage2";
-import AboutPage1 from "./pages/AboutPage1";
-import ContactPage1 from "./pages/ContactPage1";
+import Navbar from "./components/Navbar";
+import HomePage from "./pages/HomePage";
+import BlogPostPage from "./pages/BlogPostPage";
+import AboutPage from "./pages/AboutPage";
+import ContactPage from "./pages/ContactPage";
 import AdminDashboard from "./pages/AdminDashboard";
 import ContactDetails from "./pages/ContactDetails";
 import Footer from "./components/Footer";
@@ -37,7 +37,7 @@ const App = () => {
     <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
       <Router>
         <ToastContainer />
-        <Navbar1
+        <Navbar
           isLoggedIn={isLoggedIn}
           handleLogin={handleLogin}
           handleLogout={handleLogout}
@@ -46,21 +46,28 @@ const App = () => {
 
         <Routes>
           <Route path="/" element={<LandingPage />} />
-          <Route path="/home" element={<HomePage1 />} />
-          <Route path="/post/:id" element={<BlogPostPage2 />} />
-          <Route path="/about" element={<AboutPage1 />} />
-          <Route path="/contact" element={<ContactPage1 />} />
           <Route
-            path="/admin"
+            path="/home"
             element={
               isLoggedIn && userRole === "admin" ? (
                 <AdminDashboard />
               ) : (
-                <Navigate to="/home" />
+                <HomePage />
               )
             }
           />
-          <Route path="/contact-details" element={<ContactDetails />} />
+          <Route path="/post/:id" element={<BlogPostPage />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route
+            path="/contact"
+            element={
+              isLoggedIn && userRole === "admin" ? (
+                <ContactDetails />
+              ) : (
+                <ContactPage />
+              )
+            }
+          />
           <Route
             path="/admin/new"
             element={
