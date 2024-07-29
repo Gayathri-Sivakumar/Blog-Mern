@@ -2,8 +2,9 @@
 import { Box, Typography, Paper, Avatar, Divider } from "@mui/material";
 
 const CommentSection = ({ comments }) => {
+  console.log(comments);
   if (!Array.isArray(comments)) {
-    return null; // or some fallback UI
+    return null;
   }
 
   return (

@@ -21,7 +21,7 @@ import { Link, useNavigate } from "react-router-dom";
 import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import { login } from "../services/api";
-import image from "../images/Blogger-Logo.png";
+import image from "../images/Logo.png";
 import LoginDialog from "./LoginDialog";
 
 const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
@@ -55,7 +55,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
     } catch (error) {
       setAlert({
         type: "error",
-        message: "Login failed: Invalid credentials.",
+        message: error.message || "An unexpected error occurred.",
       });
       setAlertOpen(true);
     }
@@ -82,6 +82,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
         flexDirection: "column",
         justifyContent: "space-between",
         backgroundColor: "#EAEFF2",
+        p: 1,
       }}
       role="presentation"
       onClick={toggleDrawer(false)}
@@ -91,10 +92,9 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
         <ListItem>
           <img
             src={image}
-            alt="Blogger"
+            alt="Blog Bite"
             style={{
-              width: "60px",
-              display: "block",
+              width: "220px",
               margin: "0 auto",
               height: "auto",
             }}
@@ -139,99 +139,157 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
         sx={{
           bgcolor: theme.palette.background.paper,
           color: theme.palette.text.primary,
+          boxShadow: "0px 1px rgba(0, 0, 0, 0.075)",
         }}
       >
-        <Container maxWidth="lg">
-          <Toolbar disableGutters sx={{ justifyContent: "space-between" }}>
-            <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
-              <img
-                src={image}
-                alt="Blogger"
-                style={{
-                  width: "60px",
-                  display: "block",
-                  transition: "transform 0.3s",
-                  "&:hover": {
-                    transform: "scale(1.1)",
-                  },
+        <Container maxWidth="lg" disableGutters>
+          <Toolbar
+            sx={{ display: "flex", justifyContent: "space-between", px: 1 }}
+          >
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Link to="/" style={{ textDecoration: "none", color: "inherit" }}>
+                <img
+                  src={image}
+                  alt="Blogger"
+                  style={{
+                    width: "80px", // Increased the size of the logo
+                    height: "auto",
+                    display: "block",
+                    transition: "transform 0.3s",
+                    "&:hover": {
+                      transform: "scale(1.1)",
+                    },
+                  }}
+                />
+              </Link>
+              <Typography
+                variant="h4"
+                sx={{
+                  display: { xs: "none", sm: "block" },
+                  fontWeight: "bold",
+                  ml: 1,
                 }}
-              />
-            </Link>
-            <Typography
-              variant="h4"
+              >
+                Blog Bite
+              </Typography>
+            </Box>
+            <Box
               sx={{
+                display: { xs: "none", md: "flex" },
+                alignItems: "center",
+                gap: 1,
                 flexGrow: 1,
-                ml: 2,
-                display: { xs: "none", sm: "block" },
-                fontWeight: "bold",
+                justifyContent: "flex-end",
               }}
             >
-              Blogger
-            </Typography>
-            <Box sx={{ display: { xs: "none", md: "flex" }, gap: 2 }}>
               <Button
-                color="inherit"
                 component={Link}
                 to="/"
-                sx={{ textTransform: "none" }}
+                sx={{
+                  textTransform: "none",
+                  color: "black",
+                  backgroundColor: "transparent",
+                  "&:hover": {
+                    backgroundColor: theme.palette.secondary,
+                    color: "white",
+                  },
+                }}
               >
                 Home
               </Button>
               <Button
-                color="inherit"
                 component={Link}
                 to="/about"
-                sx={{ textTransform: "none" }}
+                sx={{
+                  textTransform: "none",
+                  color: "black",
+                  backgroundColor: "transparent",
+                  "&:hover": {
+                    backgroundColor: theme.palette.secondary,
+                    color: "white",
+                  },
+                }}
               >
                 About
               </Button>
               {isLoggedIn && userRole === "admin" ? (
                 <Button
-                  color="inherit"
                   component={Link}
                   to="/contact-details"
-                  sx={{ textTransform: "none" }}
+                  sx={{
+                    textTransform: "none",
+                    color: "black",
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: theme.palette.secondary,
+                      color: "white",
+                    },
+                  }}
                 >
                   Contact Details
                 </Button>
               ) : (
                 <Button
-                  color="inherit"
                   component={Link}
                   to="/contact"
-                  sx={{ textTransform: "none" }}
+                  sx={{
+                    textTransform: "none",
+                    color: "black",
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: theme.palette.secondary,
+                      color: "white",
+                    },
+                  }}
                 >
                   Contact
                 </Button>
               )}
               {isLoggedIn && userRole === "admin" && (
                 <Button
-                  color="inherit"
                   component={Link}
                   to="/admin"
-                  sx={{ textTransform: "none" }}
+                  sx={{
+                    textTransform: "none",
+                    color: "black",
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: theme.palette.secondary,
+                      color: "white",
+                    },
+                  }}
                 >
                   Admin Panel
                 </Button>
               )}
             </Box>
-            <Tooltip title={isLoggedIn ? "Logout" : "Login"}>
-              <Button
+            <Box sx={{ display: "flex", alignItems: "center" }}>
+              <Tooltip title={isLoggedIn ? "Logout" : "Login"}>
+                <Button
+                  onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}
+                  sx={{
+                    textTransform: "none",
+                    color: "black",
+                    backgroundColor: "transparent",
+                    "&:hover": {
+                      backgroundColor: theme.palette.secondary,
+                      color: "white",
+                    },
+                    ml: 1,
+                  }}
+                >
+                  {isLoggedIn ? "Logout" : "Login"}
+                </Button>
+              </Tooltip>
+              <IconButton
                 color="inherit"
-                onClick={isLoggedIn ? handleButtonLogout : handleClickOpen}
-                sx={{ textTransform: "none", ml: 2 }}
+                aria-label="menu"
+                sx={{ display: { xs: "block", md: "none" } }}
+                onClick={toggleDrawer(true)}
               >
-                {isLoggedIn ? "Logout" : "Login"}
-              </Button>
-            </Tooltip>
-            <IconButton
-              color="inherit"
-              aria-label="menu"
-              sx={{ display: { xs: "block", md: "none" } }}
-              onClick={toggleDrawer(true)}
-            >
-              <MenuIcon />
-            </IconButton>
+                <MenuIcon />
+              </IconButton>
+            </Box>
           </Toolbar>
         </Container>
       </AppBar>
@@ -243,6 +301,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
           "& .MuiDrawer-paper": {
             bgcolor: theme.palette.background.paper,
             color: theme.palette.text.primary,
+            p: 1,
           },
         }}
       >

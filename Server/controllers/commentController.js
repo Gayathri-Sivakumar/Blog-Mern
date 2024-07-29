@@ -3,11 +3,11 @@ const Comment = require("../models/Comment");
 // Create a new comment
 const createComment = async (req, res) => {
   try {
-    const { postId, name, content } = req.body;
+    const { postId, authorName, content } = req.body;
     console.log(req.body);
     const newComment = new Comment({
       blogId: postId,
-      authorName: name,
+      authorName: authorName,
       content: content,
       // author: {
       //   id: req.user._id,

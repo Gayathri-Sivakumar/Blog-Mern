@@ -18,7 +18,7 @@ const Footer = () => {
     >
       <Container maxWidth="lg">
         <Typography variant="body1">
-          All rights reserved to Blogger @2024
+          All rights reserved to Blog Bite @2024
         </Typography>
       </Container>
     </Box>

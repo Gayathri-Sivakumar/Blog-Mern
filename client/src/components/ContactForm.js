@@ -91,7 +91,12 @@ const ContactForm = () => {
         helperText={errors.message}
         sx={{ mb: 2 }}
       />
-      <Button type="submit" variant="contained" color="primary">
+      <Button
+        type="submit"
+        variant="contained"
+        color="primary"
+        sx={{ display: "block", ml: "auto" }}
+      >
         Send
       </Button>
       <Snackbar open={open} autoHideDuration={6000} onClose={handleClose}>
