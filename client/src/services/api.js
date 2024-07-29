@@ -25,6 +25,7 @@ export const login = async (credentials) => {
     // Decode the token to get user info
     const decodedToken = jwtDecode(token);
     const { email, name, role } = decodedToken;
+    localStorage.setItem("userRole", role);
 
     // Return the user info
     return { email, name, role };
