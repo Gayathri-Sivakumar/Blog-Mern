@@ -1,7 +1,7 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode";
 
-const API_URL = "http://localhost:8081";
+const API_URL = "https://blog-mern-api-nine.vercel.app/";
 
 const api = axios.create({
   baseURL: API_URL,
