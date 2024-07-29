@@ -8,7 +8,7 @@ Before you begin, ensure you have the following installed on your local machine:
 
 ##Installation
 ###1.Clone the repository:
-git clone https://github.com/your-username/your-repo-name.git
+git clone https://github.com/Gayathri-Sivakumar/Blog-Mern.git
 cd your-repo-name
 ###2.Install dependencies for the backend:
 cd server
@@ -29,7 +29,7 @@ CROS_ORIGIN=your_frontend_link
 3.Start the backend server:
 npm start
 
-####The backend server will start on http://localhost:5000.
+####The backend server will start on http://localhost:8081.
 
 ###Running the Frontend
 1.Navigate to the client directory:
@@ -53,5 +53,3 @@ MongoDB
 Mongoose
 JWT for authentication
 bcrypt for password hashing
-
-
