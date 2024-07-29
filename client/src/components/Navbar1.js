@@ -184,7 +184,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
             >
               <Button
                 component={Link}
-                to="/"
+                to="/home"
                 sx={{
                   textTransform: "none",
                   color: "black",

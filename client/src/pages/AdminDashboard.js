@@ -79,7 +79,11 @@ const AdminDashboard = () => {
 
   return (
     <Container>
-      <IconButton color="primary" onClick={() => navigate("/")} sx={{ mt: 2 }}>
+      <IconButton
+        color="primary"
+        onClick={() => navigate("/home")}
+        sx={{ mt: 2 }}
+      >
         <ArrowBack />
       </IconButton>
       <Typography variant="h4" gutterBottom sx={{ mt: 2 }}>
