@@ -34,7 +34,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(helmet()); // Security headers
 app.use(
   cors({
-    origin: "http://localhost:3000",
+    origin: process.env.CORS_ORIGIN || "http://localhost:3000",
     methods: ["GET", "POST", "PUT", "DELETE"],
     allowedHeaders: ["Content-Type", "Authorization"],
   })
