@@ -50,7 +50,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
     try {
       const response = await login(credentials);
       handleLogin(response.role);
-      navigate("/");
+      navigate("/home");
       handleClose();
     } catch (error) {
       setAlert({
@@ -101,7 +101,7 @@ const Navbar1 = ({ isLoggedIn, handleLogin, handleLogout, userRole }) => {
           />
         </ListItem>
         <Divider />
-        <ListItem button component={Link} to="/">
+        <ListItem button component={Link} to="/home">
           <ListItemText primary="Home" />
         </ListItem>
         <ListItem button component={Link} to="/about">
