@@ -17,7 +17,7 @@ const BlogPostCard = ({ post, admin, handleDeleteClick }) => {
   const { title, shortDescription, images = [], _id } = post;
   const imageUrl =
     images.length > 0
-      ? `http://localhost:8081/${images[0].replace(/\\/g, "/")}`
+      ? `https://blog-mern-api-nine.vercel.app/${images[0].replace(/\\/g, "/")}`
       : null;
 
   return (
