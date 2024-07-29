@@ -45,9 +45,6 @@ app.use((req, res, next) => {
   next();
 });
 
-// Serve static files
-app.use("/uploads", express.static(uploadsDir));
-
 // Routes
 app.use("/blogs", blogRoutes);
 app.use("/comments", commentRoutes);
