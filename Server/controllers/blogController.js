@@ -116,6 +116,7 @@ const updateBlog = async (req, res) => {
 const deleteBlog = async (req, res) => {
   try {
     const blog = await Blog.findById(req.params.id);
+
     if (!blog) return res.status(404).json({ error: "Blog not found" });
 
     // // Ensure only the author or an admin can delete the blog
@@ -123,9 +124,11 @@ const deleteBlog = async (req, res) => {
     //   return res.status(403).json({ error: "Access denied" });
     // }
 
-    await blog.delete();
+    // Delete the blog
+    await Blog.deleteOne({ _id: req.params.id });
+    // Delete comments associated with the blog
     await Comment.deleteMany({ blogId: blog._id });
-    res.json({ message: "Blog deleted successfully" });
+    res.status(200).json({ success: "deteted" });
   } catch (error) {
     res.status(500).json({ error: "Error deleting blog" });
   }

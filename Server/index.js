@@ -35,6 +35,7 @@ app.use(helmet()); // Security headers
 const allowedOrigins = [
   "https://blog-mern-frontend-clldtok24-gayathris-projects-e91ac8fc.vercel.app",
   "https://blog-mern-frontend-two.vercel.app",
+  "http://localhost:3000",
 ];
 app.use(
   cors({
