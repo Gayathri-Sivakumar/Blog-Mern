@@ -3,7 +3,7 @@ const Blog = require("../models/Blog");
 const Comment = require("../models/Comment");
 const multer = require("multer");
 
-// Multer setup
+// Multer setup for file uploads
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
@@ -14,22 +14,21 @@ const createBlog = async (req, res) => {
     const { title, shortDescription, content, authorName } = req.body;
     let image = null;
 
+    // Convert image to base64 if present
     if (req.file) {
       image = req.file.buffer.toString("base64");
     }
 
+    // Create new blog post
     const newBlog = new Blog({
-      title: title,
-      shortDescription: shortDescription,
-      content: content,
-      // author: {
-      //   id: req.user._id,
-      //   name: req.user.name,
-      // },
-      authorName: authorName,
+      title,
+      shortDescription,
+      content,
+      authorName,
       images: image ? [image] : [],
     });
 
+    // Save blog post to the database
     await newBlog.save();
     console.log(newBlog);
     res.status(201).json(newBlog);
@@ -39,24 +38,14 @@ const createBlog = async (req, res) => {
   }
 };
 
-// // Get all blog posts by the request user
-// const getBlogsByUser = async (req, res) => {
-//   try {
-//     const blogs = await Blog.find({ "author.id": req.user._id }).sort({
-//       createdAt: -1,
-//     });
-//     res.json(blogs);
-//   } catch (error) {
-//     res.status(500).json({ error: "Error fetching user blogs" });
-//   }
-// };
-
 // Get all blog posts
 const getAllBlogs = async (req, res) => {
   try {
+    // Fetch all blogs sorted by creation date
     const blogs = await Blog.find().sort({ createdAt: -1 });
     res.json(blogs);
   } catch (error) {
+    console.error("Error fetching blogs:", error);
     res.status(500).json({ error: "Error fetching blogs" });
   }
 };
@@ -64,16 +53,15 @@ const getAllBlogs = async (req, res) => {
 // Get a specific blog post by ID
 const getBlogById = async (req, res) => {
   try {
-    // const blog = await Blog.findById(req.params.id).populate(
-    //   "author.id",
-    //   "name"
-    // );
-
+    // Fetch blog post by ID
     const blog = await Blog.findById(req.params.id);
-    if (!blog) return res.status(404).json({ error: "Blog not found" });
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
     res.json(blog);
     console.log(blog);
   } catch (error) {
+    console.error("Error fetching blog:", error);
     res.status(500).json({ error: "Error fetching blog" });
   }
 };
@@ -84,18 +72,23 @@ const updateBlog = async (req, res) => {
     const { title, shortDescription, content, authorName } = req.body;
     let image = null;
 
+    // Convert image to base64 if present
     if (req.file) {
       image = req.file.buffer.toString("base64");
     }
 
-    // Ensure only the author or an admin can update the blog
+    // Fetch blog post by ID
     const blog = await Blog.findById(req.params.id);
-    if (!blog) return res.status(404).json({ error: "Blog not found" });
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
 
+    // Ensure only the author or an admin can update the blog (commented out)
     // if (blog.author.id.toString() !== req.user._id.toString() && !req.isAdmin) {
     //   return res.status(403).json({ error: "Access denied" });
     // }
 
+    // Update blog post fields
     blog.title = title;
     blog.shortDescription = shortDescription;
     blog.content = content;
@@ -105,6 +98,7 @@ const updateBlog = async (req, res) => {
     }
     blog.updatedAt = Date.now();
 
+    // Save updated blog post to the database
     const updatedBlog = await blog.save();
     res.json(updatedBlog);
   } catch (error) {
@@ -116,21 +110,26 @@ const updateBlog = async (req, res) => {
 // Delete a blog post
 const deleteBlog = async (req, res) => {
   try {
+    // Fetch blog post by ID
     const blog = await Blog.findById(req.params.id);
+    if (!blog) {
+      return res.status(404).json({ error: "Blog not found" });
+    }
 
-    if (!blog) return res.status(404).json({ error: "Blog not found" });
-
-    // // Ensure only the author or an admin can delete the blog
+    // Ensure only the author or an admin can delete the blog (commented out)
     // if (blog.author.id.toString() !== req.user._id.toString() && !req.isAdmin) {
     //   return res.status(403).json({ error: "Access denied" });
     // }
 
-    // Delete the blog
+    // Delete the blog post
     await Blog.deleteOne({ _id: req.params.id });
-    // Delete comments associated with the blog
+
+    // Delete comments associated with the blog post
     await Comment.deleteMany({ blogId: blog._id });
-    res.status(200).json({ success: "deteted" });
+
+    res.status(200).json({ success: "Blog deleted successfully" });
   } catch (error) {
+    console.error("Error deleting blog:", error);
     res.status(500).json({ error: "Error deleting blog" });
   }
 };

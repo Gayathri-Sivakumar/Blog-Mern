@@ -13,7 +13,6 @@ const blogSchema = new mongoose.Schema(
   }
 );
 
-// Optional: Pre-save hook to ensure updatedAt is updated on save
 blogSchema.pre("save", function (next) {
   if (this.isModified()) {
     this.updatedAt = Date.now();
