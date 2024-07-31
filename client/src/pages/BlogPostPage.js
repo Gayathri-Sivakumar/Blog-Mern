@@ -24,7 +24,11 @@ const BlogPostPage = ({ isLoggedIn }) => {
   const navigate = useNavigate();
   const [post, setPost] = useState(null);
   const [comments, setComments] = useState([]);
-  const [comment, setComment] = useState({ authorName: "", content: "" });
+  const [comment, setComment] = useState({
+    authorName: "",
+    content: "",
+    createdAt: new Date(),
+  });
 
   useEffect(() => {
     const fetchPost = async () => {
