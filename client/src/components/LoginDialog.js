@@ -11,6 +11,7 @@ import {
   Box,
 } from "@mui/material";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const LoginDialog = ({
   open,
@@ -31,10 +32,11 @@ const LoginDialog = ({
         }}
       >
         <Avatar sx={{ m: 1, bgcolor: "secondary.main" }}>
-          <LockOutlinedIcon />
+          {/* <LockOutlinedIcon /> */}
+          <AccountCircleIcon />
         </Avatar>
         <DialogTitle
-          sx={{ textAlign: "center", fontWeight: "bold", fontSize: 24 }}
+          sx={{ textAlign: "center", fontWeight: "bold", fontSize: 22, p: 0 }}
         >
           Login
         </DialogTitle>

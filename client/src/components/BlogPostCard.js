@@ -12,15 +12,14 @@ import { Link } from "react-router-dom";
 import ArrowForward from "@mui/icons-material/ArrowForward";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
+import defaultImage from "../images/blogimage.jpg";
 
 const BlogPostCard = ({ post, admin, handleDeleteClick }) => {
   const { title, shortDescription, images = [], _id } = post;
 
   // Handle Base64 images
   const imageUrl =
-    images.length > 0
-      ? `data:image/jpeg;base64,${images[0]}`
-      : "/path/to/default/image.jpg";
+    images.length > 0 ? `data:image/jpeg;base64,${images[0]}` : defaultImage;
 
   return (
     <Card
@@ -40,7 +39,7 @@ const BlogPostCard = ({ post, admin, handleDeleteClick }) => {
         alt={title}
         style={{ height: "200px", objectFit: "cover" }}
         onError={(e) => {
-          e.target.src = "/path/to/default/image.jpg";
+          e.target.src = defaultImage;
         }}
       />
       <CardContent>

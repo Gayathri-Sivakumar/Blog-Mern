@@ -110,7 +110,7 @@ const PostForm = () => {
         await createBlog(formData);
         setAlert({ type: "success", message: "Post created successfully!" });
       }
-      navigate("/admin");
+      navigate("/home");
     } catch (error) {
       console.error("Error saving post:", error);
       setAlert({ type: "error", message: "Failed to save post." });
